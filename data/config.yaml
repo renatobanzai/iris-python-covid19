@@ -1,0 +1,10 @@
+file:
+  #arquivo do repositorio da Johns Hopkins https://github.com/CSSEGISandData/COVID-19.git
+  covid19_deaths_global: ../data/time_series_covid19_deaths_global.csv
+
+iris:
+  host: iris-covid19
+  port: 51773
+  namespace: USER
+  username: _SYSTEM
+  password: idontusethispassinanywhere
