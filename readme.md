@@ -1,4 +1,4 @@
-##IRIS Native API + Python + COVID-19 Data
+## IRIS Native API + Python + COVID-19 Data
 A project solution using Python as application language and the IRIS as a database to observe and learn how to use IRIS Native API. 
 
 ## Why COVID-19 Data?
@@ -12,14 +12,22 @@ After clone this repo, open a terminal and go to the iris-python-covid19 and typ
 docker-compose up
 ```
 
+# Do the data will be automatically updated?
+No actuallty I just caught a file updated with 2020-05-23 data. 
+You can update downloading it from https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv and copying it to this ./data folder.
+*Eventually I'll automatize this job and all the data pipeline.   
+
 After a while you can open your browser and go to the address, you will see some warnings of error because maybe the python container will start first and will restart until the IRIS container be prepared.
 
 ```
 http://localhost:8050
 ```
 
-##I don't want to run local
-It's your luck day! You can see the screenshots here =) 
+##If you don't want to run local
+There will be some screenshots to see. 
 
 ##Thanks
 Collaboration are welcome! I'll perform some changes here in the code but I think it's a good start to the ones who use python!
+
+## Note of condolence
+For everyone who lost any loved one for COVID-19 I would like to extend my heartfelt condolence. May my condolences bring you peace during this painful time.
