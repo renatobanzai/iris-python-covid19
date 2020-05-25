@@ -40,6 +40,9 @@ No actuallty I just caught a file updated with 2020-05-23 data.
 You can update downloading it from https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv and copying it to this ./data folder.
 *Eventually I'll automatize this job and all the data pipeline.   
 
+## How does it work?
+This is a python application acessing the IRIS service to persist and read data. I use globals to store raw data from JHU and plot it using Python community libraries. All code in ./app folder.
+
 ## If you don't want to run local
 There will be some screenshots to see and a url with you can browse the solution. 
 
