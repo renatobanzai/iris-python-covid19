@@ -6,6 +6,8 @@ from dash.dependencies import Input, Output, State
 import yaml
 from iriscovid19 import IRISCOVID19
 
+#todo: create a class that convert yaml to global
+#todo: create a class that convert global to yaml
 try:
     with open("../data/config.yaml", "r") as file:
         config = yaml.safe_load(file)
@@ -18,9 +20,11 @@ app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 #Class with IRIS Persistence
 iriscovid19 = IRISCOVID19()
 iriscovid19.deaths_file_path = config["file"]["covid19_deaths_global"]
+iriscovid19.countries_lookup_file_path = config["file"]["countries_lookup"]
 iriscovid19.iris_config = config["iris"]
+iriscovid19.import_countries_lookup()
 iriscovid19.import_global_deaths()
-
+iriscovid19.process_global_deaths()
 
 def get_layout(dropdown_countries):
     return html.Div(children=[
@@ -78,4 +82,4 @@ def update_graph(yaxis_type, countries):
 
 if __name__ == '__main__':
     plot_data()
-    app.run_server(debug=False,host='0.0.0.0')
+    app.run_server(debug=True,host='0.0.0.0')
