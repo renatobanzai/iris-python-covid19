@@ -1,4 +1,5 @@
 import irisnative
+import datetime
 import csv
 import json
 
@@ -74,7 +75,7 @@ class IRISCOVID19():
             population = iris.getFloat("^countrydetails", level1_subscript, "population")
             timeless_deaths = self. get_raw_country_time_series(level1_subscript)
             if timeless_deaths and population and population > 0:
-                date_deaths_x = [x[0] for x in timeless_deaths[4:len(timeless_deaths) - 1]]
+                date_deaths_x = [format(datetime.datetime.strptime(x[0], "%m/%d/%y").date()) for x in timeless_deaths[4:len(timeless_deaths) - 1]]
                 date_deaths_y = [int(x[1]) for x in timeless_deaths[4:len(timeless_deaths) - 1]]
                 date_deaths_y_rate = [(int(x[1])*100000/population) for x in timeless_deaths[4:len(timeless_deaths) - 1]]
                 timeless_deaths_y = [int(x[1]) for x in timeless_deaths[4:len(timeless_deaths) - 1] if x[1] != "0"]
