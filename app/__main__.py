@@ -45,16 +45,26 @@ def get_layout(dropdown_countries):
                 options=[{'label': i, 'value': i} for i in ['Linear', 'Log']],
                 value='Linear',
                 labelStyle={'display': 'inline-block'}
+            ),
+            dcc.RadioItems(
+                id='time-series-type',
+                options=[{'label': i[1], 'value': i[0]} for i in [('timeless', 'After 1st Death'),('date', 'From 1st Infection')]],
+                value='timeless',
+                labelStyle={'display': 'inline-block'}
             )
         ]),
+        dcc.RadioItems(
+            id='count-type',
+            options=[{'label': i[1], 'value': i[0]} for i in [('total', 'Total Deaths'), ('rate', 'Death Rate (per 100 000 people)')]],
+            value='rate',
+            labelStyle={'display': 'inline-block'}
+        ),
         html.Div(
         dcc.Graph(
             id='covid-graph',
             figure={
                 'layout': {
-                    'title': 'COVID-19 Comparison',
-                    'yaxis': {'title': 'Deaths'},
-                    'xaxis': {'title': 'Days after 1st Death'}
+                    'title': 'COVID-19 Comparison'
                 }
             }
         ))
@@ -66,17 +76,20 @@ def plot_data(countries=[]):
 
 @app.callback(Output('covid-graph', 'figure'),
               [Input('yaxis-type', 'value'),
-                Input('countries-dropdown', 'value')])
-def update_graph(yaxis_type, countries):
-    plotly_data = iriscovid19.get_plotly_formatted_time_series(countries)
+                Input('countries-dropdown', 'value'),
+                Input('time-series-type', 'value'),
+                Input('count-type', 'value')
+               ])
+def update_graph(yaxis_type, countries, time_series_type, count_type):
+    plotly_data = iriscovid19.get_plotly_formatted_time_series(countries, time_series_type, count_type)
     return {
                 'data': plotly_data,
                 'layout': {
                     'title': 'COVID-19 Comparison',
-                    'yaxis': {'title': 'Total COVID-19 Deaths',
+                    'yaxis': {'title': "Deaths Total" if count_type=="total" else "Deaths Rate (per 100 000 people)",
                               'type': yaxis_type.lower()
                               },
-                    'xaxis': {'title': 'Days after 1st Death'}
+                    'xaxis': {'title': 'Days after 1st Death' if time_series_type=="timeless" else "Date"}
                 }
             }
 

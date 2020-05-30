@@ -71,16 +71,21 @@ class IRISCOVID19():
         result = []
         # Iterate over all nodes forwards
         for level1_subscript, level1_value in leverl1_subscript_iter:
+            population = iris.getFloat("^countrydetails", level1_subscript, "population")
             timeless_deaths = self. get_raw_country_time_series(level1_subscript)
-            if timeless_deaths:
+            if timeless_deaths and population and population > 0:
                 date_deaths_x = [x[0] for x in timeless_deaths[4:len(timeless_deaths) - 1]]
                 date_deaths_y = [int(x[1]) for x in timeless_deaths[4:len(timeless_deaths) - 1]]
+                date_deaths_y_rate = [(int(x[1])*100000/population) for x in timeless_deaths[4:len(timeless_deaths) - 1]]
                 timeless_deaths_y = [int(x[1]) for x in timeless_deaths[4:len(timeless_deaths) - 1] if x[1] != "0"]
+                timeless_deaths_y_rate = [(int(x[1])*100000/population) for x in timeless_deaths[4:len(timeless_deaths) - 1] if x[1] != "0"]
                 result.append((level1_subscript, timeless_deaths))
                 iris.set(json.dumps(timeless_deaths_y), "^end.timeless.deaths", "countries", level1_subscript, "y")
+                iris.set(json.dumps(timeless_deaths_y_rate), "^end.timeless.deaths", "countries", level1_subscript, "y_rate")
                 iris.set(json.dumps(list(range(0, len(timeless_deaths_y)-1))), "^end.timeless.deaths", "countries",level1_subscript, "x")
                 iris.set(json.dumps(date_deaths_x), "^end.date.deaths", "countries", level1_subscript, "x")
                 iris.set(json.dumps(date_deaths_y), "^end.date.deaths", "countries", level1_subscript, "y")
+                iris.set(json.dumps(date_deaths_y_rate), "^end.date.deaths", "countries", level1_subscript, "y_rate")
         return result
 
     # Get the raw data from IRIS from one country
@@ -118,15 +123,28 @@ class IRISCOVID19():
         return result
 
     #Get a formatted time series just as plotly needs
-    def get_plotly_formatted_time_series(self, countries):
+    def get_plotly_formatted_time_series(self, countries, time_series_type="", count_type=""):
         result = []
         iris = self.get_iris_native()
+
+        global_name = "^end.timeless.deaths"
+        if time_series_type== "timeless":
+            global_name="^end.timeless.deaths"
+        elif time_series_type== "date":
+            global_name = "^end.date.deaths"
+
+        y_subscript = "y"
+        if count_type=="rate":
+            y_subscript = "y_rate"
+
+
         # todo: concatenate if the node has more than 32k char
         for country in countries:
-            x = iris.get("^end.timeless.deaths", "countries", country.lower(), "x")
-            y = iris.get("^end.timeless.deaths", "countries", country.lower(), "y")
+            x = json.loads(iris.get(global_name, "countries", country.lower(), "x"))
+            y = json.loads(iris.get(global_name, "countries", country.lower(), y_subscript))
             result.append({
                 "y": y,
+                "x": x,
                 "name": country
             })
         return result
@@ -135,7 +153,7 @@ class IRISCOVID19():
     def get_dash_formatted_countries(self):
         iris = self.get_iris_native()
         # todo: concatenate if the node has more than 32k char
-        subscript_iter = iris.iterator("^end.timeless.deaths", "countries")
+        subscript_iter = iris.iterator("^end.date.deaths", "countries")
         result = []
         # Iterate over all nodes forwards
         for subscript, value in subscript_iter:
