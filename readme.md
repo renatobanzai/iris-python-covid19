@@ -91,6 +91,17 @@ pass: theansweris42
 ```
 
 
+### You should look at IRIS Admin Portal
+
+I'm using for now the USER namespace (todo: create my onw namespace)
+
+```
+http://localhost:9092
+user: _SYSTEM
+pass: theansweris42
+```
+
+
 ## Will the data be automatically updated?
 No actuallty I just caught a file updated with 2020-05-23 data. 
 You can update downloading it from https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv and copying it to this ./data folder.
