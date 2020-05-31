@@ -56,9 +56,11 @@ irisglobalgraph: Plot the global in a interactive chart.
 * acess to a terminal in your environment
 
 ### Installing
-After cloning this repo open a terminal go to the iris-python-covid19 and type this command:
+After cloning this repo open a terminal go to the iris-python-covid19 and type these commands:
 
 ```
+docker-compose build
+
 docker-compose up
 ```
 

@@ -3,7 +3,7 @@ file:
   covid19_deaths_global: ../data/time_series_covid19_deaths_global.csv
   countries_lookup: ../data/UID_ISO_FIPS_LookUp_Table.csv
 iris:
-  host: localhost
+  host: iris-covid19
   port: 51773
   namespace: USER
   username: _SYSTEM
