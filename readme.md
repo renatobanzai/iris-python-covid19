@@ -28,7 +28,7 @@ print(obj_global.subscripts["countries"].subscripts["brazil"].value)
 100
 ```
 
-irisdomestic: A class that I made to show one way I use the Native API.  
+irisdomestic: A class that I made to show one way I use the Native API extending the native api.  
 
 ```
 #has the same methods of irisnative + factory of irisglobal class
@@ -84,7 +84,7 @@ You can update downloading it from https://github.com/CSSEGISandData/COVID-19/bl
 *Eventually I'll automatize this job and all the data pipeline.   
 
 ## How does it work?
-This is a python application acessing the IRIS service to persist and read data. I use globals to store raw data from JHU and plot it using Python community libraries. All code in ./app folder.
+This is a python application using the IRIS service to persist and read data. I use globals to store raw data from JHU and plot it using Python community libraries. All code in ./app folder.
 
 ## If you don't want to run local
 There will be some screenshots to see and a url with you can browse the solution. 
