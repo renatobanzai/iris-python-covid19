@@ -5,6 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import yaml
 from iriscovid19_new import IRISCOVID19_new
+import cProfile
 
 #todo: create a class that convert yaml to global
 #todo: create a class that convert global to yaml
@@ -19,6 +20,7 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
 
 # Class with IRIS Persistence
+
 iriscovid19 = IRISCOVID19_new(config)
 iriscovid19.deaths_file_path = config["file"]["covid19_deaths_global"]
 iriscovid19.countries_lookup_file_path = config["file"]["countries_lookup"]
@@ -27,7 +29,7 @@ iriscovid19.import_countries_lookup()
 iriscovid19.import_global_deaths()
 iriscovid19.process_global_deaths()
 
-
+print("")
 
 
 

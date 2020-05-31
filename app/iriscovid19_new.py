@@ -42,17 +42,13 @@ class IRISCOVID19_new():
             reader = csv.DictReader(csvfile)
             for row in reader:
                 if row["Province_State"] == "":
-                    obj_global = self.iris_domestic.view_global("^countrydetails",
-                                                                row["Country_Region"].lower(),
-                                                                "population")
+                    name_global = ("^countrydetails",row["Country_Region"].lower(), "population")
                 else:
-                    obj_global = self.iris_domestic.view_global("^countrydetails",
-                                                                row["Country_Region"].lower(),
-                                                                "state",
-                                                                row["Province_State"].lower(),
-                                                                "population")
+                    name_global = ("^countrydetails", row["Country_Region"].lower(), "state",
+                                   row["Province_State"].lower(),
+                                   "population")
 
-                obj_global.set(row["Population"])
+                self.iris_domestic.set(row["Population"], *name_global)
 
     def import_global_deaths(self):
         #todo: improve the iris global class to use

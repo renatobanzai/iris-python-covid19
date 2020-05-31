@@ -1,9 +1,52 @@
-# IRIS Native API + Python + COVID-19 Data
-A project solution using Python as application language and the IRIS as a database to observe and learn how to use IRIS Native API. 
+# IRIS Python Suite
+A set of tools and practices (or experiments) using Python as application language and the IRIS as a database 
+to observe and learn how to use IRIS Native API. 
 
-## Why COVID-19 Data?
+## IRIS Python COVID19 Chart
 As the pandemy evolves in the world a lot of information are being spreaded so I decided to create an application to audit those information.
 Unfortunately each country has a different test policy so I decided to use the death data to avoid the cases subnotifications.
+
+## Tools
+
+irisglobal: A class that I made to be filled as a Graph Data Structure and all recursive. So if you instatiate one irisglobal
+object all global data will be in memory in this object.
+
+Imagine a global like this*
+
+```
+^covid19("countries", "us")=5000
+^covid19("countries", "us", "newyork")=10
+^covid19("countries", "brazil", )=100
+```
+
+With my class irisglobal in python you have just to instatiate 
+to have access to all global nodes in memory and indexed as a dictionary. 
+
+```
+obj_global = irisglobal("^covid19")
+print(obj_global.subscripts["countries"].subscripts["brazil"].value)
+100
+```
+
+irisdomestic: A class that I made to show one way I use the Native API.  
+
+```
+#has the same methods of irisnative + factory of irisglobal class
+```
+
+irisjson: An experiment to serialize a json into a global array.
+
+```
+#under construction
+```
+
+irisyaml: An experiment to serialize a YAML into a global array.
+
+```
+Under construction
+```
+
+irisglobalgraph: Plot the global in a interactive chart.
 
 ## Getting started
 

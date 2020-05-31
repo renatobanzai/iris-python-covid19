@@ -5,6 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import yaml
 from iriscovid19 import IRISCOVID19
+import cProfile
 
 #todo: create a class that convert yaml to global
 #todo: create a class that convert global to yaml
@@ -26,6 +27,10 @@ iriscovid19.import_countries_lookup()
 iriscovid19.import_global_deaths()
 iriscovid19.process_global_deaths()
 
+print("")
+
+
+
 def get_layout(dropdown_countries):
     return html.Div(children=[
         html.H1(children='IRIS Native API + Python + JHU Data'),
@@ -37,7 +42,7 @@ def get_layout(dropdown_countries):
             dcc.Dropdown(
                 id='countries-dropdown',
                 options=dropdown_countries,
-                value=['brazil', 'sweden', 'united kingdom'],
+                value=['us','brazil', 'sweden','united kingdom','russia'],
                 multi=True
             ),
             dcc.RadioItems(
@@ -48,14 +53,14 @@ def get_layout(dropdown_countries):
             ),
             dcc.RadioItems(
                 id='time-series-type',
-                options=[{'label': i[1], 'value': i[0]} for i in [('timeless', 'After 1st Death'),('date', 'From 1st Infection')]],
+                options=[{'label': i[1], 'value': i[0]} for i in [('timeless', 'Days After 1st Death'),('date', 'Real Dates')]],
                 value='timeless',
                 labelStyle={'display': 'inline-block'}
             )
         ]),
         dcc.RadioItems(
             id='count-type',
-            options=[{'label': i[1], 'value': i[0]} for i in [('total', 'Total Deaths'), ('rate', 'Death Rate (per 100 000 people)')]],
+            options=[{'label': i[1], 'value': i[0]} for i in [('rate', 'Rate (Deaths per 100 000 people)'), ('total', 'Total Deaths')]],
             value='rate',
             labelStyle={'display': 'inline-block'}
         ),
@@ -81,12 +86,13 @@ def plot_data(countries=[]):
                 Input('count-type', 'value')
                ])
 def update_graph(yaxis_type, countries, time_series_type, count_type):
+    #cProfile.run("plotly_data = iriscovid19.get_plotly_formatted_time_series(countries, time_series_type, count_type)")
     plotly_data = iriscovid19.get_plotly_formatted_time_series(countries, time_series_type, count_type)
     return {
                 'data': plotly_data,
                 'layout': {
                     'title': 'COVID-19 Comparison',
-                    'yaxis': {'title': "Deaths Total" if count_type=="total" else "Deaths Rate (per 100 000 people)",
+                    'yaxis': {'title': "Deaths Total" if count_type=="total" else "Rate (Deaths per 100 000 people)",
                               'type': yaxis_type.lower()
                               },
                     'xaxis': {'title': 'Days after 1st Death' if time_series_type=="timeless" else "Date"}

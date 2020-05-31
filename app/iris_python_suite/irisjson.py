@@ -7,5 +7,3 @@ class irisjson():
 
     def globallize(self, global_name):
         print(global_name)
-
-    
