@@ -11,14 +11,14 @@ I have deployed the application as a demo here:
 (http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
 
 ### Screenshot
-![picture](img/python_covid_screenshot.png)
+![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/python_covid_screenshot.png)
 
 
 ## IRIS Python CRUD Example
 An interactive dropdownlist talking with a correspondent global to set the Countries Default on Chart. 
 
 
-![picture](img/python_crud_screenshot.png)
+![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/python_crud_screenshot.png)
 
 ## Tools
 
