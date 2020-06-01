@@ -31,7 +31,7 @@ class irisdomestic_chart():
 
         return self.iris_connection
 
-    def view_global(self, *global_array, **otherargs):
+    def view_global_chart(self, *global_array, **otherargs):
         newargs = otherargs.copy()
         if not "iris_connection" in otherargs:
             newargs["iris_connection"] = self.iris_connection
