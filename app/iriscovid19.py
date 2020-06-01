@@ -163,3 +163,12 @@ class IRISCOVID19():
                 "value":subscript
             })
         return result
+
+    def set_default_countries(self, countries):
+        s_value = json.dumps(countries)
+        iris = self.get_iris_native()
+        iris.set(s_value, "^config", "defaultcountries")
+
+    def get_default_countries(self):
+        iris = self.get_iris_native()
+        return json.loads(iris.get("^config", "defaultcountries"))

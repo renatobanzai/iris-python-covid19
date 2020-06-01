@@ -8,3 +8,11 @@ iris:
   namespace: USER
   username: _SYSTEM
   password: theansweris42
+covid19_app:
+  default_countries:
+    - us
+    - brazil
+    - russia
+    - united kingdom
+    - sweden
+

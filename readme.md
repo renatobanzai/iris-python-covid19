@@ -80,6 +80,12 @@ After a while you can open your browser and go to the address:
 http://localhost:8050
 ```
 
+### Main Menu
+Now the project has a main menu that points you to the functionalities:
+- COVID-19 Chart Example "/covid19-chart": A interactive chart using globals + Python
+- Global CRUD Example "/config-CRUD": A demonstration of a Globals CRUD 
+- Reset Data (Dont Panic!) "/reset-data": If you want to re-perform the start-up applications process  
+
 ### You should look at IRIS Admin Portal
 
 I'm using for now the USER namespace (todo: create my onw namespace)
