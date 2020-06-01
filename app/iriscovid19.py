@@ -61,7 +61,11 @@ class IRISCOVID19():
                     self.iris_native.set(json.dumps(list(row.items())), "^raw.covid19", "countries", row["Country/Region"].lower(), "state", row["Province/State"].lower(), "deaths")
 
     #todo: create a object like to iterate the globals
-    #creates a specialized data layer
+    '''
+    process_global_deaths method act as dataprep
+    joining raw data from covid csv files and countrys population
+    the result is a set of globals ready to be used to plot charts
+    '''
     def process_global_deaths(self):
         iris = self.get_iris_native()
         # todo: concatenate if the node has more than 32k char
@@ -90,7 +94,6 @@ class IRISCOVID19():
         return result
 
     # Get the raw data from IRIS from one country
-    # todo: create a specialized layer of data to avoid processing
     def get_raw_country_time_series(self, country):
         iris = self.get_iris_native()
         # todo: concatenate if the node has more than 32k char
@@ -138,8 +141,6 @@ class IRISCOVID19():
         if count_type=="rate":
             y_subscript = "y_rate"
 
-
-        # todo: concatenate if the node has more than 32k char
         for country in countries:
             x = json.loads(iris.get(global_name, "countries", country.lower(), "x"))
             y = json.loads(iris.get(global_name, "countries", country.lower(), y_subscript))
@@ -164,6 +165,7 @@ class IRISCOVID19():
             })
         return result
 
+    #method to set default countries
     def set_default_countries(self, countries):
         s_value = json.dumps(countries)
         iris = self.get_iris_native()
