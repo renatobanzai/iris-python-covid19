@@ -8,6 +8,9 @@ Unfortunately each country has a different test policy so I decided to use the d
 
 ![picture](img/python_covid_screenshot.png)
 
+
+You can test in this URL (http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
+
 ## IRIS Python CRUD Example
 An interactive dropdownlist talking with a correspondent global to set the Countries Default on Chart. 
 
