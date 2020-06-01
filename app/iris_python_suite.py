@@ -70,12 +70,12 @@ class irisglobal():
         subscripts_iterator = self.iris_native.iterator(*self.global_array)
         if not self.subscripts_filter:
             for subscript_name, subscript_value in subscripts_iterator:
-                self.subscripts[subscript_name] = irisglobal(*(self.global_array+(subscript_name,)),
-                                                             iris_connection=self.iris_connection)
+                irisglobal(*(self.global_array+(subscript_name,)),
+                           iris_connection=self.iris_connection)
         else:
             for subscript_name in self.subscripts_filter:
-                self.subscripts[subscript_name] = irisglobal(*(self.global_array+(subscript_name,)),
-                                                             iris_connection=self.iris_connection)
+                irisglobal(*(self.global_array+(subscript_name,)),
+                           iris_connection=self.iris_connection)
         return
 
     def kill(self):
@@ -173,9 +173,9 @@ class irisglobalchart():
 
         node_trace = go.Scatter(
             x=node_x, y=node_y,
-            mode='markers',
+            mode='markers+text',
             hoverinfo='text',
-            marker=dict(size=10)
+            marker=dict(size=40)
         )
         node_trace.text = node_text
         fig = go.Figure(data=[edge_trace, node_trace],
