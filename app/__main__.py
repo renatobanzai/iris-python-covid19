@@ -5,10 +5,11 @@ import dash_html_components as html
 from dash.dependencies import Input, Output, State
 import yaml
 from iriscovid19 import IRISCOVID19
-import cProfile
+from iris_python_suite import irisglobal, irisdomestic, irisglobalchart
+import networkx as nx
 
-#todo: create a class that convert yaml to global
-#todo: create a class that convert global to yaml
+#todo: demonstrate a profile of different aproachs in code
+
 try:
     with open("../data/config.yaml", "r") as file:
         config = yaml.safe_load(file)
@@ -27,6 +28,29 @@ iriscovid19.set_default_countries(config["covid19_app"]["default_countries"])
 iriscovid19.import_countries_lookup()
 iriscovid19.import_global_deaths()
 iriscovid19.process_global_deaths()
+obj_irisdomestic = irisdomestic(config["iris"])
+
+def populate_global_for_chart():
+    obj_irisdomestic.set(0, "^computer", "hardware", "input","keyborad")
+    obj_irisdomestic.set(0, "^computer", "hardware", "input","usb drive")
+    obj_irisdomestic.set(0, "^computer", "hardware", "input","mouse")
+    obj_irisdomestic.set(0, "^computer", "hardware", "input","webcam")
+    obj_irisdomestic.set(0, "^computer", "hardware", "output","screen")
+    obj_irisdomestic.set(0, "^computer", "hardware", "output","printer")
+    obj_irisdomestic.set(0, "^computer", "hardware", "output","soundbox")
+    obj_irisdomestic.set(0, "^computer", "software", "os")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "linux")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "linux", "ubuntu")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "linux", "alpine")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "linux", "centOS")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "linux", "Debian")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "unix")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "macOS", "iEverything")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "windows", "ms office")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "windows", "ms paint")
+    obj_irisdomestic.set(0, "^computer", "software", "os", "windows", "a lot games")
+
+populate_global_for_chart()
 
 '''
 Page Layouts
@@ -136,6 +160,8 @@ def get_reset_data_layout():
     iriscovid19.import_countries_lookup()
     iriscovid19.import_global_deaths()
     iriscovid19.process_global_deaths()
+    populate_global_for_chart()
+
     return html.Div([
                 html.H1(children='Data Reseted! Dont Panic!'),
                 html.H3(children='Data ingested from  ../data files to IRIS Database!'),
@@ -147,8 +173,42 @@ def get_reset_data_layout():
                 dcc.Link('Global CRUD Example "/config-CRUD"', href='/config-CRUD'),
                 html.Br(),
                 dcc.Link('Main menu "/"', href='/'),
-                html.Br()
+                html.Br(),
+        html.Div(
+            dcc.Graph(
+                id='global-graph',
+                figure={
+                    'layout': {
+                        'title': ''
+                    }
+                }
+            ))
     ])
+
+def get_global_chart_layout():
+    return html.Div(children=[
+                html.Div([html.H1(children='Global Graph View'),
+                # represents the URL bar, doesn't render anything
+                dcc.Link('COVID-19 Chart Example "/covid19-chart"', href='/covid19-chart'),
+                html.Br(),
+                dcc.Link('Global CRUD Example "/config-CRUD"', href='/config-CRUD'),
+                html.Br(),
+                dcc.Link('Main menu "/"', href='/')]),
+        html.Div([
+            html.Label('Type a global array separated by "," e.g: ^computer'),
+            dcc.Input(
+                id="txt_global_chart",
+                type="text",
+                placeholder="^computer",
+                value="^computer"
+            )]
+        ),
+        html.Div(
+            dcc.Graph(id="global-chart-graph")
+        )
+    ])
+
+
 
 '''
 Input Callbacks
@@ -180,6 +240,22 @@ def update_graph(yaxis_type, countries, time_series_type, count_type, suppress_c
                 }
             }
 
+@app.callback(Output('global-chart-graph', 'figure'),
+              [Input('txt_global_chart', 'value')])
+def update_global_chart(global_text):
+    try:
+        with open("../data/config.yaml", "r") as file:
+            config = yaml.safe_load(file)
+    except Exception as e:
+        print('Error reading the config file')
+
+    global_array = tuple([x.strip() for x in global_text.split(",")])
+    obj_nx = nx.Graph()
+    global_chart = obj_irisdomestic.view_global_chart(obj_nx=obj_nx, *global_array)
+    fig = global_chart.get_fig()
+    return fig
+
+
 # Update the index
 @app.callback(dash.dependencies.Output('page-content', 'children'),
               [dash.dependencies.Input('url', 'pathname')])
@@ -188,6 +264,8 @@ def display_page(pathname, suppress_callback_exceptions=True):
         return get_config_crud_layout()
     elif pathname == '/covid19-chart':
         return get_covid19_layout()
+    elif pathname == '/global-chart':
+        return get_global_chart_layout()
     elif pathname == '/reset-data':
         return get_reset_data_layout()
     else:
