@@ -86,16 +86,6 @@ Now the project has a main menu that points you to the functionalities:
 - Global CRUD Example "/config-CRUD": A demonstration of a Globals CRUD 
 - Reset Data (Dont Panic!) "/reset-data": If you want to re-perform the start-up applications process  
 
-### You should look at IRIS Admin Portal
-
-I'm using for now the USER namespace (todo: create my onw namespace)
-
-```
-http://localhost:9092
-user: _SYSTEM
-pass: theansweris42
-```
-
 
 ### You should look at IRIS Admin Portal
 
