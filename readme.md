@@ -10,8 +10,8 @@ Unfortunately each country has a different test policy so I decided to use the d
 I have deployed the application as a demo here:
 (http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
 
-### Screenshot
-![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/python_covid_screenshot.png)
+### The Chart Application
+![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/covid_chart_navigate.gif)
 
 
 ## IRIS Python CRUD Example
