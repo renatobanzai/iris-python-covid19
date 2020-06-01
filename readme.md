@@ -6,9 +6,19 @@ to observe and learn how to use IRIS Native API.
 As the pandemy evolves in the world a lot of information are being spreaded so I decided to create an application to audit those information.
 Unfortunately each country has a different test policy so I decided to use the death data to avoid the cases subnotifications.
 
+![picture](img/python_covid_screenshot.png)
+
+## IRIS Python CRUD Example
+An interactive dropdownlist talking with a correspondent global to set the Countries Default on Chart. 
+
+
+![picture](img/python_crud_screenshot.png)
+
 ## Tools
 
-irisglobal: A class that I made to be filled as a Graph Data Structure and all recursive. So if you instatiate one irisglobal
+A set of classes in python using the IRIS Native API: 
+
+- irisglobal: A class that I made to be filled as a Graph Data Structure and all recursive. So if you instatiate one irisglobal
 object all global data will be in memory in this object.
 
 Imagine a global like this*
@@ -28,25 +38,25 @@ print(obj_global.subscripts["countries"].subscripts["brazil"].value)
 100
 ```
 
-irisdomestic: A class that I made to show one way I use the Native API extending the native api.  
+- irisdomestic: A class that I made to show one way I use the Native API extending the native api.  
 
 ```
 #has the same methods of irisnative + factory of irisglobal class
 ```
 
-irisjson: An experiment to serialize a json into a global array.
+- irisjson: An experiment to serialize a json into a global array.
 
 ```
 #under construction
 ```
 
-irisyaml: An experiment to serialize a YAML into a global array.
+- irisyaml: An experiment to serialize a YAML into a global array.
 
 ```
 Under construction
 ```
 
-irisglobalgraph: Plot the global in a interactive chart.
+- irisglobalgraph: Plot the global in a interactive chart.
 
 ## Getting started
 
@@ -81,7 +91,7 @@ http://localhost:8050
 ```
 
 ### Main Menu
-Now the project has a main menu that points you to the functionalities:
+The project has a main menu that points you to the functionalities:
 - COVID-19 Chart Example "/covid19-chart": A interactive chart using globals + Python
 - Global CRUD Example "/config-CRUD": A demonstration of a Globals CRUD 
 - Reset Data (Dont Panic!) "/reset-data": If you want to re-perform the start-up applications process  
@@ -96,7 +106,6 @@ http://localhost:9092
 user: _SYSTEM
 pass: theansweris42
 ```
-
 
 ## Will the data be automatically updated?
 No actuallty I just caught a file updated with 2020-05-23 data. 
