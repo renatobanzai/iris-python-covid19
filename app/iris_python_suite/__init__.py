@@ -1,5 +1,7 @@
 import irisnative
 import json
+import networkx as nx
+import plotly.graph_objects as go
 
 class irisdomestic():
     def __init__(self, iris_config):
