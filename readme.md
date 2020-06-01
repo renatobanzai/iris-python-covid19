@@ -6,10 +6,13 @@ to observe and learn how to use IRIS Native API.
 As the pandemy evolves in the world a lot of information are being spreaded so I decided to create an application to audit those information.
 Unfortunately each country has a different test policy so I decided to use the death data to avoid the cases subnotifications.
 
+### Demo
+I have deployed the application as a demo here:
+(http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
+
+### Screenshot
 ![picture](img/python_covid_screenshot.png)
 
-
-You can test in this URL (http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
 
 ## IRIS Python CRUD Example
 An interactive dropdownlist talking with a correspondent global to set the Countries Default on Chart. 
