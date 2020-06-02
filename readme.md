@@ -20,7 +20,7 @@ Unfortunately each country has a different test policy so I decided to use the d
 
 ### Demo
 I have deployed the application as a demo here:
-(http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
+(http://iris-python-suite.eastus.cloudapp.azure.com/global-chart)
 
 ### COVID19 Chart
 ![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/covid_chart_navigate.gif)
@@ -104,17 +104,14 @@ http://localhost:9092
 user: _SYSTEM
 pass: theansweris42
 ```
-
-## Will the data be automatically updated?
-No actuallty I just caught a file updated with 2020-05-23 data. 
-You can update downloading it from https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv and copying it to this ./data folder.
-*Eventually I'll automatize this job and all the data pipeline.   
+ 
 
 ## How does it work?
 This is a python application using the IRIS service to persist and read data. I use globals to store raw data from JHU and plot it using Python community libraries. All code in ./app folder.
+Here a link to understant more the application: (https://community.intersystems.com/post/iris-python-suite-hitchhikers-guide-global-1)
 
 ## If you don't want to run local
-There will be some screenshots to see and a url with you can browse the solution. 
+I deployed all the application at Azure, take a look at (http://iris-python-suite.eastus.cloudapp.azure.com/) 
 
 ## Note of condolence
 For everyone who lost any loved one for COVID-19 I would like to extend my heartfelt condolence. May my condolences bring you peace during this painful time.
