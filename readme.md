@@ -2,6 +2,18 @@
 A set of tools and practices (or experiments) using Python as application language and the IRIS as a database 
 to observe and learn how to use IRIS Native API. 
 
+## IRIS Python Global Viewer Graph Chart
+Using the Python Native API to view globals as graphs. Just put one of IRIS Globals Array at the input field to see an
+interactive graph.
+
+### Demo
+I have deployed the application as a demo here:
+(http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
+
+### Global Viewer Chart
+
+![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/global_chart.gif)
+
 ## IRIS Python COVID19 Chart
 As the pandemy evolves in the world a lot of information are being spreaded so I decided to create an application to audit those information.
 Unfortunately each country has a different test policy so I decided to use the death data to avoid the cases subnotifications.
@@ -10,9 +22,8 @@ Unfortunately each country has a different test policy so I decided to use the d
 I have deployed the application as a demo here:
 (http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
 
-### The Chart Application
+### COVID19 Chart
 ![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/covid_chart_navigate.gif)
-
 
 ## IRIS Python CRUD Example
 An interactive dropdownlist talking with a correspondent global to set the Countries Default on Chart. 
@@ -23,6 +34,14 @@ An interactive dropdownlist talking with a correspondent global to set the Count
 ## Tools
 
 A set of classes in python using the IRIS Native API: 
+
+- irisdomestic: A class that I made to show one way I use the Native API extending the native api.  
+
+```
+#has the same methods of irisnative + factory of irisglobal class
+```
+
+- irisglobalchart: A component to plot any global as a network graph chart.
 
 - irisglobal: A class that I made to be filled as a Graph Data Structure and all recursive. So if you instatiate one irisglobal
 object all global data will be in memory in this object.
@@ -44,44 +63,21 @@ print(obj_global.subscripts["countries"].subscripts["brazil"].value)
 100
 ```
 
-- irisdomestic: A class that I made to show one way I use the Native API extending the native api.  
-
-```
-#has the same methods of irisnative + factory of irisglobal class
-```
-
-- irisjson: An experiment to serialize a json into a global array.
-
-```
-#under construction
-```
-
-- irisyaml: An experiment to serialize a YAML into a global array.
-
-```
-Under construction
-```
-
-- irisglobalgraph: Plot the global in a interactive chart.
-
 ## Getting started
 
 ### Prerequisites
 * git
 * docker and docker-compose
-* acess to a terminal in your environment
+* access to a terminal in your environment
 
 ### Installing
-After cloning this repo open a terminal go to the iris-python-covid19 and type these commands:
+After cloning this repo open a terminal go to the iris-python-covid19 folder and type these commands:
 
 ```
 docker-compose build
 
 docker-compose up
 ```
-
-I'm working to find the correctly the compose configuration so you will see some warning of python not working. 
-This is because the application is waiting (and restarting) until the IRIS container don't wake up properly.
 
 ### Estimated time to up containers
 1st time running will depend of your internet link to download the images and dependencies. 
@@ -97,11 +93,7 @@ http://localhost:8050
 ```
 
 ### Main Menu
-The project has a main menu that points you to the functionalities:
-- COVID-19 Chart Example "/covid19-chart": A interactive chart using globals + Python
-- Global CRUD Example "/config-CRUD": A demonstration of a Globals CRUD 
-- Reset Data (Dont Panic!) "/reset-data": If you want to re-perform the start-up applications process  
-
+The project has a main menu that points you to all the examples. Feel free to navigate.  
 
 ### You should look at IRIS Admin Portal
 
