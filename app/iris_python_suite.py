@@ -127,18 +127,21 @@ class irisglobalchart():
         if self.value:
             self.has_value = True
         subscripts_iterator = self.iris_native.iterator(*self.global_array)
+
         if not self.subscripts_filter:
             for subscript_name, subscript_value in subscripts_iterator:
-                self.obj_nx.add_edge(self.id, ".".join((self.global_array + (subscript_name,))))
-                self.subscripts[subscript_name] = irisglobalchart(*(self.global_array + (subscript_name,)),
-                                                                  iris_connection=self.iris_connection,
-                                                                  obj_nx=self.obj_nx)
+                new_global_array = self.global_array + (subscript_name,)
+                self.obj_nx.add_edge(self.global_array, new_global_array)
+                irisglobalchart(*new_global_array,
+                                iris_connection=self.iris_connection,
+                                obj_nx=self.obj_nx)
         else:
             for subscript_name in self.subscripts_filter:
-                self.obj_nx.add_edge(self.id, ".".join((self.global_array + (subscript_name,))))
-                self.subscripts[subscript_name] = irisglobalchart(*(self.global_array + (subscript_name,)),
-                                                                  iris_connection=self.iris_connection,
-                                                                  obj_nx=self.obj_nx)
+                new_global_array = self.global_array + (subscript_name,)
+                self.obj_nx.add_edge(self.global_array, new_global_array)
+                irisglobalchart(*new_global_array,
+                                iris_connection=self.iris_connection,
+                                obj_nx=self.obj_nx)
         return
 
     def get_fig(self):
@@ -163,25 +166,29 @@ class irisglobalchart():
             mode='lines')
 
         node_text = []
+        node_hovertext = []
         node_x = []
         node_y = []
         for node in _nx.nodes():
             x, y = pos[node]
             node_x.append(x)
             node_y.append(y)
-            node_text.append(node)
+            node_text.append(node[-1])
+            node_hovertext.append(node)
 
         node_trace = go.Scatter(
             x=node_x, y=node_y,
             mode='markers+text',
             hoverinfo='text',
-            marker=dict(size=40)
+            marker=dict(size=50),
+            text=node_text,
+            hovertext=node_hovertext
         )
-        node_trace.text = node_text
+
         fig = go.Figure(data=[edge_trace, node_trace],
                         layout=go.Layout(
-                            title='<br>Global Graph View: ' + ",".join(self.global_array),
-                            titlefont_size=16,
+                            title='Global Graph View: ' + ",".join(self.global_array),
+                            titlefont_size=12,
                             showlegend=False,
                             hovermode='closest',
                             annotations=[dict(
@@ -191,4 +198,17 @@ class irisglobalchart():
                             xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
                             yaxis=dict(showgrid=False, zeroline=False, showticklabels=False))
                         )
+        fig.update_layout(
+            autosize=False,
+            width=1200,
+            height=600,
+            margin=dict(
+                l=0,
+                r=0,
+                b=0,
+                t=0,
+                pad=4
+            ),
+            paper_bgcolor="LightSteelBlue",
+        )
         return fig
