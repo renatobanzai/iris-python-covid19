@@ -2,15 +2,15 @@
 
 How to use the IRIS Native API in Python to access globals and plot some charts.
 
-## Why Python?
+### Why Python?
 With a large adoption and use in the world, Python have a great community and a lot of accelerators | libraries to deploy any kind of application.
 If you are curious (https://www.python.org/about/apps/)
 
-## Why COVID-19 Data 
+### Why COVID-19 Data 
 As the pandemy evolves in the world a lot of information are being spreaded so I decided to create an application to audit those information.
 Unfortunately each country has a different test policy so I decided to use the death data to avoid the cases subnotifications.
 
-## Chart options:
+### Chart options:
 - Linear: Using linear y axis
 - Log: Using a logathmic y axis as the infection grows exponentially
 - Days after the first death: Align all 1st deaths country in the same time series
@@ -18,15 +18,14 @@ Unfortunately each country has a different test policy so I decided to use the d
 - Rate: Consider the population of the country
 - Total Deaths: Consider just the number of deaths
 
-### Screenshot
-![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/python_covid_screenshot.png)
+### The Chart Application
+![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/covid_chart_navigate.gif)
 
-## Demo
+### Demo - Try it yourself
 I have deployed the application as a demo here:
 (http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
 
-
-## Take a look the code
+### Take a look the code
 
 Clone my repository to see all the code implementation.
 
@@ -78,15 +77,12 @@ The paradigm in this case is quite different from the SQL Patterns. To perform j
 that can be used as a index to merge the globals. e.g:
 
 ``#{country_index} is only an example``
-'''
+```
 ^raw.covid19("countries","{country_index}","deaths")
 ^countrydetails("{country_index}","population")
-''' 
+``` 
 
 If for some reason you need to use the population of a country its prepared to get with one .get() method. 
-
-## Note of condolence
-For everyone who lost any loved one for COVID-19 I would like to extend my heartfelt condolence. May my condolences bring you peace during this painful time.
 
 ## Running the application by yourself
 
@@ -99,9 +95,9 @@ For everyone who lost any loved one for COVID-19 I would like to extend my heart
 With docker-compose you can easily up one environment with all the pieces and configurations go to the iris-python-covid19 
 folder and type this:
 
-'''
+```
 $ docker compose up
-'''
+```
 
 ### Estimated time to up containers
 1st time running will depend of your internet link to download the images and dependencies. 
