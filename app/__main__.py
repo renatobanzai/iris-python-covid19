@@ -7,6 +7,7 @@ import yaml
 from iriscovid19 import IRISCOVID19
 from iris_python_suite import irisglobal, irisdomestic, irisglobalchart
 import networkx as nx
+import dash_bootstrap_components as dbc
 
 #todo: demonstrate a profile of different aproachs in code
 
@@ -17,7 +18,7 @@ except Exception as e:
     print('Error reading the config file')
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(__name__, external_stylesheets=external_stylesheets, suppress_callback_exceptions=True)
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
 
 #Class with IRIS Persistence
 iriscovid19 = IRISCOVID19()
@@ -59,13 +60,16 @@ Page Layouts
 def get_index_layout():
     return html.Div([
                 html.H1(children='IRIS Python Suite'),
+                html.Div([
+                    dbc.NavItem(dbc.NavLink("Global View Graph", href="/global-chart")),
+                    dbc.NavItem(dbc.NavLink("COVID-19 Chart", href="/covid19-chart")),
+                    dbc.NavItem(dbc.NavLink("Config CRUD", href="/config-CRUD")),
+                    dbc.NavItem(dbc.NavLink("Reset Data (Dont Panic!)", href="/reset-data")),
+                    dbc.NavItem(dbc.NavLink("Vote in iris-python-suite!",
+                                            href="https://openexchange.intersystems.com/contest/current",
+                                            target="_blank"))
+                ])
                 # represents the URL bar, doesn't render anything
-                dcc.Link('COVID-19 Chart Example "/covid19-chart"', href='/covid19-chart'),
-                html.Br(),
-                dcc.Link('Global CRUD Example "/config-CRUD"', href='/config-CRUD'),
-                html.Br(),
-                dcc.Link('Reset Data (Dont Panic!) "/reset-data"', href='/reset-data'),
-                html.Br()
     ])
 
 def get_config_crud_layout():
@@ -75,13 +79,6 @@ def get_config_crud_layout():
     return html.Div(children=[
         html.H1(children='Example of CRUD - Modifying the Default Config in IRIS Global'),
         html.P(children='''Change the default countries to show on COVID-19 Chart'''),
-        html.Div([
-            # represents the URL bar, doesn't render anything
-            dcc.Location(id='url', refresh=False),
-            html.Br(),
-            dcc.Link('COVID-19 Chart Example "/covid19-chart"', href='/covid19-chart'),
-            html.Br()
-        ]),
         html.Div(children=[
             html.Label('Default Countries (auto save)'),
             dcc.Dropdown(id='countries-dropdown-CRUD',
@@ -95,18 +92,6 @@ def get_covid19_layout():
     dropdown_countries = iriscovid19.get_dash_formatted_countries()
     default_countries = iriscovid19.get_default_countries()
     return html.Div(children=[
-        html.H1(children='IRIS Native API + Python + JHU Data'),
-        html.Div(children='''
-                Starting using IRIS Native API by Banzai
-            '''),
-        html.Div([
-            # represents the URL bar, doesn't render anything
-            html.Br(),
-            dcc.Link('Global CRUD Example "/config-CRUD"', href='/config-CRUD'),
-            html.Br(),
-            dcc.Link('Main Menu "/"', href='/'),
-            html.Br()
-        ]),
         html.Div(children=[
             html.Label('Countries'),
             dcc.Dropdown(
@@ -187,14 +172,8 @@ def get_reset_data_layout():
 
 def get_global_chart_layout():
     return html.Div(children=[
-                html.Div([html.H1(children='Global Graph View'),
-                # represents the URL bar, doesn't render anything
-                dcc.Link('COVID-19 Chart Example "/covid19-chart"', href='/covid19-chart'),
-                html.Br(),
-                dcc.Link('Global CRUD Example "/config-CRUD"', href='/config-CRUD'),
-                html.Br(),
-                dcc.Link('Main menu "/"', href='/')]),
         html.Div([
+            html.Br(),
             html.Label('Type a global array separated by "," e.g: ^computer'),
             dcc.Input(
                 id="txt_global_chart",
@@ -271,6 +250,23 @@ def display_page(pathname, suppress_callback_exceptions=True):
     else:
         return get_index_layout()
 
+navbar = dbc.NavbarSimple(
+    children=[
+        dbc.NavItem(dbc.NavLink("Global View Graph", href="/global-chart")),
+        dbc.NavItem(dbc.NavLink("COVID-19 Chart", href="/covid19-chart")),
+        dbc.NavItem(dbc.NavLink("Config CRUD", href="/config-CRUD")),
+        dbc.NavItem(dbc.NavLink("Reset Data (Dont Panic!)", href="/reset-data")),
+        dbc.NavItem(dbc.NavLink("Vote in iris-python-suite!",
+                                href="https://openexchange.intersystems.com/contest/current", target="_blank"))
+    ],
+    brand="IRIS Python Examples - by Banzai",
+    brand_href="/",
+    color="dark",
+    dark=True,
+)
+
 if __name__ == '__main__':
-    app.layout = html.Div([dcc.Location(id='url', refresh=False), html.Div(id='page-content')])
-    app.run_server(debug=True,host='0.0.0.0')
+    app.layout = html.Div([dcc.Location(id='url', refresh=False),
+                          html.Div(navbar),
+                          html.Div(id='page-content')])
+    app.run_server(debug=False,host='0.0.0.0')
