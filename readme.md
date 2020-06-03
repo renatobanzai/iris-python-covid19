@@ -83,12 +83,20 @@ print(obj_global.subscripts["countries"].subscripts["brazil"].value)
 
 ### Prerequisites
 * git
-* docker and docker-compose
+* docker and docker-compose **adjust docker settings to up memory and cpu the AI demands more capacity**
 * access to a terminal in your environment
 
 ### Installing
 After cloning this repo open a terminal go to the iris-python-covid19 folder and type these commands:
 
+```
+git clone https://github.com/renatobanzai/iris-python-covid19.git
+```
+
+### Building and running the docker-compose
+**adjust docker settings to up memory and cpu the AI demands more capacity**
+- 4GB Memory (or more if you can)
+- 2CPU (or more if you can)
 ```
 docker-compose build
 
@@ -110,6 +118,12 @@ http://localhost:8050
 
 ### Main Menu
 The project has a main menu that points you to all the examples. Feel free to navigate.  
+
+- Globals as Graph Chart
+- COVID19 Graph
+- CRUD of Default Configs
+- Maintenance of Training Data to Chatbot
+- Conversation with the Chatbot
 
 ### You should look at IRIS Admin Portal
 
