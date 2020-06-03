@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import dash
+import dash_table
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
@@ -21,15 +22,22 @@ external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.BOOTSTRAP], suppress_callback_exceptions=True)
 
 #Class with IRIS Persistence
+obj_irisdomestic = irisdomestic(config["iris"])
+
+
 iriscovid19 = IRISCOVID19()
 iriscovid19.deaths_file_path = config["file"]["covid19_deaths_global"]
 iriscovid19.countries_lookup_file_path = config["file"]["countries_lookup"]
 iriscovid19.iris_config = config["iris"]
+iriscovid19.iris_connection = obj_irisdomestic.iris_connection
 iriscovid19.set_default_countries(config["covid19_app"]["default_countries"])
 iriscovid19.import_countries_lookup()
 iriscovid19.import_global_deaths()
 iriscovid19.process_global_deaths()
-obj_irisdomestic = irisdomestic(config["iris"])
+default_countries = iriscovid19.get_default_countries()
+dropdown_countries = iriscovid19.get_dash_formatted_countries()
+
+
 
 def populate_global_for_chart():
     obj_irisdomestic.set(0, "^computer", "hardware", "input","keyborad")
@@ -73,8 +81,6 @@ def get_index_layout():
     ])
 
 def get_config_crud_layout():
-    default_countries = iriscovid19.get_default_countries()
-    dropdown_countries = iriscovid19.get_dash_formatted_countries()
 
     return html.Div(children=[
         html.H1(children='Example of CRUD - Modifying the Default Config in IRIS Global'),
@@ -89,8 +95,7 @@ def get_config_crud_layout():
         ])])
 
 def get_covid19_layout():
-    dropdown_countries = iriscovid19.get_dash_formatted_countries()
-    default_countries = iriscovid19.get_default_countries()
+
     return html.Div(children=[
         html.Div(children=[
             html.Label('Countries'),
@@ -137,7 +142,6 @@ def get_reset_data_layout():
     except Exception as e:
         print('Error reading the config file')
 
-    iriscovid19 = IRISCOVID19()
     iriscovid19.deaths_file_path = config["file"]["covid19_deaths_global"]
     iriscovid19.countries_lookup_file_path = config["file"]["countries_lookup"]
     iriscovid19.iris_config = config["iris"]
@@ -187,6 +191,26 @@ def get_global_chart_layout():
         )
     ])
 
+def get_chatbot_training_layout():
+    questions = obj_irisdomestic.iterator("^chatbot.training.data")
+    rows = []
+    for question, answer in questions:
+        rows.append({"question":question, "answer":answer})
+
+    return html.Div(children=[
+        html.Div([
+            html.Br(),
+            html.P('Questions and answers to training the Banzairis Bot')])
+    ,dash_table.DataTable(
+            id='table-chatbot',
+            columns=[{"name": "Question", "id": "question"},{"name": "Answer", "id": "answer"}],
+            data=rows,
+            editable=True
+        ),
+        html.Button('Add Row', id='editing-rows-button', n_clicks=0),
+        html.Button('SAVE THE DATA', id='save-rows-button', n_clicks=0),
+        html.Div(id="table-editing-simple-output")
+    ])
 
 
 '''
@@ -222,17 +246,34 @@ def update_graph(yaxis_type, countries, time_series_type, count_type, suppress_c
 @app.callback(Output('global-chart-graph', 'figure'),
               [Input('txt_global_chart', 'value')])
 def update_global_chart(global_text):
-    try:
-        with open("../data/config.yaml", "r") as file:
-            config = yaml.safe_load(file)
-    except Exception as e:
-        print('Error reading the config file')
-
     global_array = tuple([x.strip() for x in global_text.split(",")])
     obj_nx = nx.Graph()
     global_chart = obj_irisdomestic.view_global_chart(obj_nx=obj_nx, *global_array)
     fig = global_chart.get_fig()
     return fig
+
+@app.callback(
+    Output('table-chatbot', 'data'),
+    [Input('editing-rows-button', 'n_clicks')],
+    [State('table-chatbot', 'data'),
+     State('table-chatbot', 'columns')])
+def add_row(n_clicks, rows, columns):
+    if n_clicks > 0:
+        rows.append({c['id']: '' for c in columns})
+    return rows
+
+@app.callback(
+    Output('table-editing-simple-output', 'children'),
+    [Input('save-rows-button', 'n_clicks')],
+    [State('table-chatbot', 'data')])
+def save_data(n_clicks, data):
+    if n_clicks > 0:
+        for register in data:
+            obj_irisdomestic.set(register["answer"], "^chatbot.training.data", register["question"])
+            obj_irisdomestic.set("0", "^chatbot.training.isupdated")
+        return "data saved"
+    else:
+        return ""
 
 
 # Update the index
@@ -247,6 +288,8 @@ def display_page(pathname, suppress_callback_exceptions=True):
         return get_global_chart_layout()
     elif pathname == '/reset-data':
         return get_reset_data_layout()
+    elif pathname == '/chatbot-training-data':
+        return get_chatbot_training_layout()
     else:
         return get_index_layout()
 
@@ -255,7 +298,8 @@ navbar = dbc.NavbarSimple(
         dbc.NavItem(dbc.NavLink("Global View Graph", href="/global-chart")),
         dbc.NavItem(dbc.NavLink("COVID-19 Chart", href="/covid19-chart")),
         dbc.NavItem(dbc.NavLink("Config CRUD", href="/config-CRUD")),
-        dbc.NavItem(dbc.NavLink("Reset Data (Dont Panic!)", href="/reset-data")),
+        dbc.NavItem(dbc.NavLink("Chatbot Training Data", href="/chatbot-training-data")),
+        dbc.NavItem(dbc.NavLink("Talk with Chatbot", href="http://iris-python-suite.eastus.cloudapp.azure.com:8080", target="_blank")),
         dbc.NavItem(dbc.NavLink("Vote in iris-python-suite!",
                                 href="https://openexchange.intersystems.com/contest/current", target="_blank"))
     ],
@@ -269,4 +313,4 @@ if __name__ == '__main__':
     app.layout = html.Div([dcc.Location(id='url', refresh=False),
                           html.Div(navbar),
                           html.Div(id='page-content')])
-    app.run_server(debug=False,host='0.0.0.0')
+    app.run_server(debug=True,host='0.0.0.0')

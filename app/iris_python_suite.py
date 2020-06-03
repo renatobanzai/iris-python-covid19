@@ -10,6 +10,9 @@ class irisdomestic():
         self.iris_native = irisnative.createIris(self.iris_connection)
         return
 
+    def isDefined(self, *args):
+        self.iris_native.isDefined(*args)
+
     def kill(self, *args):
         self.iris_native.kill(*args)
 
@@ -18,6 +21,9 @@ class irisdomestic():
 
     def get(self, *args):
         return self.iris_native.get(*args)
+
+    def iterator(self, *args):
+        return self.iris_native.iterator(*args)
 
     def get_iris_connection(self, iris_config):
         #todo: understand the behavior of connection object and implement the correct way

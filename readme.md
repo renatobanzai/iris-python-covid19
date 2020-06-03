@@ -2,6 +2,15 @@
 A set of tools and practices (or experiments) using Python as application language and the IRIS as a database 
 to observe and learn how to use IRIS Native API. 
 
+## Banzairis Chatbot
+A chatbot home-made using Chatter + Python Native API to store the conversations and training data. You can edit the 
+training data and automatically the next load on chatbot page will perform the training (some seconds needed).
+
+### Demo
+I have deployed the application as a demo here:
+(http://iris-python-suite.eastus.cloudapp.azure.com:8080)
+
+
 ## IRIS Python Global Viewer Graph Chart
 Using the Python Native API to view globals as graphs. Just put one of IRIS Globals Array at the input field to see an
 interactive graph.

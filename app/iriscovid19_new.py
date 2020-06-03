@@ -11,6 +11,8 @@ from iris_python_suite import irisglobal, irisdomestic
 #todo: create a data pipeline
 #todo: todo
 
+
+''''''
 class IRISCOVID19_new():
     def __init__(self, config):
         self.iris_connection = None
