@@ -43,7 +43,6 @@ class IRISCOVID19():
                 else:
                     self.iris_native.set(row["Population"], "^countrydetails", row["Country_Region"].lower(), "state", row["Province_State"].lower(), "population")
 
-
     def import_global_deaths(self):
         self.get_iris_native()
         #cleaning the global
@@ -91,6 +90,7 @@ class IRISCOVID19():
                 iris.set(json.dumps(date_deaths_x), "^end.date.deaths", "countries", level1_subscript, "x")
                 iris.set(json.dumps(date_deaths_y), "^end.date.deaths", "countries", level1_subscript, "y")
                 iris.set(json.dumps(date_deaths_y_rate), "^end.date.deaths", "countries", level1_subscript, "y_rate")
+        
         return result
 
     # Get the raw data from IRIS from one country
@@ -99,7 +99,8 @@ class IRISCOVID19():
         # todo: concatenate if the node has more than 32k char
         value = iris.get("^raw.covid19", "countries", country, "deaths")
         if value:
-            return json.loads(iris.get("^raw.covid19", "countries", country, "deaths"))
+            result = json.loads(iris.get("^raw.covid19", "countries", country, "deaths"))
+            return result
         else:
             return None
 
@@ -108,7 +109,9 @@ class IRISCOVID19():
     def get_country_time_series(self, country):
         iris = self.get_iris_native()
         #todo: concatenate if the node has more than 32k char
-        return json.loads(iris.get("^covid19", "countries", country.lower(), "deaths"))
+        result = json.loads(iris.get("^covid19", "countries", country.lower(), "deaths"))
+        
+        return result
 
     #Takes only days after 1st death in country
     #simplifying the time series to just values
@@ -149,6 +152,7 @@ class IRISCOVID19():
                 "x": x,
                 "name": country
             })
+
         return result
 
     #Get a list of countries to show in a dropdown style input
@@ -173,4 +177,6 @@ class IRISCOVID19():
 
     def get_default_countries(self):
         iris = self.get_iris_native()
-        return json.loads(iris.get("^config", "defaultcountries"))
+        result = json.loads(iris.get("^config", "defaultcountries"))
+        return result
+
