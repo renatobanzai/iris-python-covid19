@@ -14,7 +14,7 @@ I have deployed the chatbot as a demo here:
 [http://iris-python-suite.eastus.cloudapp.azure.com:8080](http://iris-python-suite.eastus.cloudapp.azure.com:8080)
 
 To look/edit custom training data:
-(http://iris-python-suite.eastus.cloudapp.azure.com/chatbot-training-data)
+[http://iris-python-suite.eastus.cloudapp.azure.com/chatbot-training-data](http://iris-python-suite.eastus.cloudapp.azure.com/chatbot-training-data)
 
 The application use those question and answer to training a machine learning model.
 
