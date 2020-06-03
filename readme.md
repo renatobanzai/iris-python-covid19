@@ -11,7 +11,7 @@ training data on main application and automatically the next load on chatbot pag
 
 ### Demo
 I have deployed the chatbot as a demo here:
-(http://iris-python-suite.eastus.cloudapp.azure.com:8080)
+[http://iris-python-suite.eastus.cloudapp.azure.com:8080](http://iris-python-suite.eastus.cloudapp.azure.com:8080)
 
 To look/edit custom training data:
 (http://iris-python-suite.eastus.cloudapp.azure.com/chatbot-training-data)
@@ -24,7 +24,7 @@ interactive graph.
 
 ### Demo
 I have deployed the application as a demo here:
-(http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
+[http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart](http://iris-python-suite.eastus.cloudapp.azure.com/covid19-chart)
 
 ### Global Viewer Chart
 
@@ -36,7 +36,7 @@ Unfortunately each country has a different test policy so I decided to use the d
 
 ### Demo
 I have deployed the application as a demo here:
-(http://iris-python-suite.eastus.cloudapp.azure.com/global-chart)
+[http://iris-python-suite.eastus.cloudapp.azure.com/global-chart](http://iris-python-suite.eastus.cloudapp.azure.com/global-chart)
 
 ### COVID19 Chart
 ![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/covid_chart_navigate.gif)
