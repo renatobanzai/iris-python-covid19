@@ -1,15 +1,22 @@
 # IRIS Python Suite
-A set of tools and practices (or experiments) using Python as application language and the IRIS as a database 
+A set of tools and examples (or experiments) using Python as application language and the IRIS as a database 
 to observe and learn how to use IRIS Native API. 
+
+![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/chatbot.gif)
 
 ## Banzairis Chatbot
 A chatbot home-made using Chatter + Python Native API to store the conversations and training data. You can edit the 
-training data and automatically the next load on chatbot page will perform the training (some seconds needed).
+training data on main application and automatically the next load on chatbot page will perform the training 
+(some seconds needed).
 
 ### Demo
-I have deployed the application as a demo here:
+I have deployed the chatbot as a demo here:
 (http://iris-python-suite.eastus.cloudapp.azure.com:8080)
 
+To look/edit custom training data:
+(http://iris-python-suite.eastus.cloudapp.azure.com/chatbot-training-data)
+
+The application use those question and answer to training a machine learning model.
 
 ## IRIS Python Global Viewer Graph Chart
 Using the Python Native API to view globals as graphs. Just put one of IRIS Globals Array at the input field to see an
