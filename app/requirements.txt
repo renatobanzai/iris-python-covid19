@@ -1,4 +1,4 @@
-PyYAML<=4.0.0
+PyYAML<=5.0.0
 dash==1.12.0
 dash-bootstrap-components==0.10.1
 dash-core-components==1.10.0
