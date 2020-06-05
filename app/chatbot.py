@@ -78,7 +78,7 @@ def get_bot_response():
     chatuser = request.args.get('login')
     userText = request.args.get('msg')
     language = request.args.get('language')
-    conversation_global = "^chatbot.conversation." + language
+    conversation_global = "^chatbot.conversation"
 
     if language == "english":
         bot = english_bot
@@ -91,7 +91,7 @@ def get_bot_response():
 
 
     result = str(bot.get_response(userText))
-    obj_irisdomestic.set(remote_addr, conversation_global, chatuser, userText, result)
+    obj_irisdomestic.set(remote_addr, conversation_global, language, chatuser, userText, result)
     return result
 
 

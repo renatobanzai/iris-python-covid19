@@ -193,7 +193,7 @@ class irisglobalchart():
             mode = 'markers+text'
         elif qtt > 79 and qtt < 300:
             size = 10
-            mode = 'markers'
+            mode = 'markers+text'
         elif qtt > 299:
             size = 5
             mode = 'markers'
@@ -205,7 +205,7 @@ class irisglobalchart():
             x=node_x, y=node_y,
             mode=mode,
             hoverinfo='text',
-            marker=dict(size=50),
+            marker=dict(size=size),
             text=node_text,
             hovertext=node_hovertext
         )
