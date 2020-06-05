@@ -25,7 +25,7 @@
     </h3>
     <div>
       <div id="chatbox">
-        <p class="botText"><span id="p_initial">Hi! I'm Banzairis Chatbot.</span></p>
+        <p class="botText"><span id="initial_message">Hi! I'm Banzairis Chatbot!</span></p>
       </div>
       <div id="userInput">
         <input id="textInput" type="text" name="msg" placeholder="Message">
@@ -63,6 +63,12 @@
 
         function validate()
         {
+            var hi = {
+              english:"Hi! I'm Banzairis Bot!",
+              russian:"Привет! Я Банзаирис Бот!",
+              portuguese:"Oi! Eu sou o Banzairis Bot!",
+              spanish:"¡Hola! Soy Banzairis Bot!"
+            }
             if($("#txt_login").val()==='')
             {
               alert("Please identify yourself and press enter");
@@ -70,7 +76,7 @@
             }
             else
             {
-              $("#p_initial").html("".concat("Hi ",$("#txt_login").val(),"! I'm Banzairis Bot!"));
+              $("#initial_message").html(hi[$("#ddl_country").val()]);
               $(".modal").modal("toggle");
               $(".close-modal").click();
               $("#textInput").focus()

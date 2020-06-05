@@ -25,6 +25,7 @@ def get_model(language):
         training_data.append(answer)
 
     bot = ChatBot(chatbot_name, storage_adapter="chatterbot.storage.SQLStorageAdapter", database_uri=db_language)
+    bot.storage.drop()
     trainer = ChatterBotCorpusTrainer(bot)
     trainer.train(corpus_model)
 
