@@ -7,6 +7,10 @@ services:
     restart: always
     hostname: iris-covid19
     command: --password-file password.txt
+    environment:
+      - ISC_DATA_DIRECTORY=/durable/irisdatabase
+    volumes:
+      - ./data:/durable
     ports:
       - 9091:51773
       - 9092:52773
