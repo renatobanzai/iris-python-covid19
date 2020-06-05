@@ -101,12 +101,20 @@ git clone https://github.com/renatobanzai/iris-python-covid19.git
 ### Need to set more memory to docker engine
 ![picture](https://raw.githubusercontent.com/renatobanzai/iris-python-covid19/master/img/docker_memory.png)
 
-### Commands
+### Running in linux and MacOS
 ```
 docker-compose build
 
 docker-compose up
 ```
+
+### Running in Windows
+```
+docker-compose -f docker-compose-windows.yml build
+
+docker-compose -f docker-compose-windows.yml up
+```
+
 
 ### Estimated time to up containers
 1st time running will depend of your internet link to download the images and dependencies. 
