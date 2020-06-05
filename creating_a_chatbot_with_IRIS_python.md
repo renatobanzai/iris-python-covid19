@@ -145,4 +145,4 @@ pass: theansweris42
 ```
 
 ### If this article help you or you like the content vote:
-This application is at the current contest on open exchange, you can vote in my application *iris-python-suite* here(https://openexchange.intersystems.com/contest/current)
+This application is at the current contest on open exchange, you can vote in my application **iris-python-suite** here(https://openexchange.intersystems.com/contest/current)

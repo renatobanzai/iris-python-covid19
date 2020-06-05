@@ -167,7 +167,7 @@ class irisglobalchart():
 
         edge_trace = go.Scatter(
             x=edge_x, y=edge_y,
-            line=dict(width=0.5, color='#888'),
+            line=dict(width=1, color='#888'),
             hoverinfo='none',
             mode='lines')
 
@@ -182,9 +182,28 @@ class irisglobalchart():
             node_text.append(node[-1])
             node_hovertext.append(node)
 
+        qtt = len(node_text)
+        size = 50
+        mode = 'markers+text'
+        if qtt > 0 and qtt < 40:
+            size = 50
+            mode = 'markers+text'
+        elif qtt > 39 and qtt< 80:
+            size = 50
+            mode = 'markers+text'
+        elif qtt > 79 and qtt < 300:
+            size = 10
+            mode = 'markers'
+        elif qtt > 299:
+            size = 5
+            mode = 'markers'
+
+
+
+
         node_trace = go.Scatter(
             x=node_x, y=node_y,
-            mode='markers+text',
+            mode=mode,
             hoverinfo='text',
             marker=dict(size=50),
             text=node_text,
