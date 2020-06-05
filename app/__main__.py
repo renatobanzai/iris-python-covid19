@@ -192,19 +192,21 @@ def get_global_chart_layout():
     ])
 
 def get_chatbot_training_layout():
-    questions = obj_irisdomestic.iterator("^chatbot.training.data")
-    rows = []
-    for question, answer in questions:
-        rows.append({"question":question, "answer":answer})
-
     return html.Div(children=[
         html.Div([
             html.Br(),
-            html.P('Questions and answers to training the Banzairis Bot')])
-    ,dash_table.DataTable(
+            html.P('Questions and answers to training the Banzairis Bot')]),
+        html.Div(children=[
+            html.Label('Countries'),
+            dcc.Dropdown(
+                id='training-country',
+                options=[{"label":x, "value":"^chatbot.training.data."+x} for x in ["english", "russian", "portuguese", "spanish"]],
+                value="^chatbot.training.data.english",
+                multi=False
+            )]),
+            dash_table.DataTable(
             id='table-chatbot',
             columns=[{"name": "Question", "id": "question"},{"name": "Answer", "id": "answer"}],
-            data=rows,
             editable=True
         ),
         html.Button('Add Row', id='editing-rows-button', n_clicks=0),
@@ -254,26 +256,34 @@ def update_global_chart(global_text):
 
 @app.callback(
     Output('table-chatbot', 'data'),
-    [Input('editing-rows-button', 'n_clicks')],
-    [State('table-chatbot', 'data'),
-     State('table-chatbot', 'columns')])
-def add_row(n_clicks, rows, columns):
-    if n_clicks > 0:
-        rows.append({c['id']: '' for c in columns})
+    [Input('editing-rows-button', 'n_clicks'),
+    Input('training-country', 'value')],
+    [State('table-chatbot', 'columns')])
+def add_row(n_clicks, global_training_country, columns):
+    questions = obj_irisdomestic.iterator(global_training_country, "question")
+    rows = []
+    for question, answer in questions:
+        rows.append({"question": question, "answer": answer})
+    if dash.callback_context.triggered[0]['prop_id'].split('.')[0] ==  "editing-rows-button":
+        if n_clicks > 0:
+            rows.append({c['id']: '' for c in columns})
     return rows
 
 @app.callback(
     Output('table-editing-simple-output', 'children'),
     [Input('save-rows-button', 'n_clicks')],
-    [State('table-chatbot', 'data')])
-def save_data(n_clicks, data):
+    [State('table-chatbot', 'data'),
+     State('training-country', 'value')])
+def save_data(n_clicks, data, global_training_country):
     if n_clicks > 0:
         for register in data:
-            obj_irisdomestic.set(register["answer"], "^chatbot.training.data", register["question"])
-            obj_irisdomestic.set("0", "^chatbot.training.isupdated")
+            obj_irisdomestic.set(register["answer"], global_training_country, "question", register["question"])
+            obj_irisdomestic.set("0", global_training_country, "isupdated")
         return "data saved"
     else:
         return ""
+
+
 
 
 # Update the index
@@ -293,7 +303,7 @@ def display_page(pathname, suppress_callback_exceptions=True):
     else:
         return get_index_layout()
 
-navbar = dbc.NavbarSimple(
+navbar = dbc.NavbarSimple(id="list_menu_content",
     children=[
         dbc.NavItem(dbc.NavLink("Global View Graph", href="/global-chart")),
         dbc.NavItem(dbc.NavLink("COVID-19 Chart", href="/covid19-chart")),
@@ -313,4 +323,4 @@ if __name__ == '__main__':
     app.layout = html.Div([dcc.Location(id='url', refresh=False),
                           html.Div(navbar),
                           html.Div(id='page-content')])
-    app.run_server(debug=False,host='0.0.0.0')
+    app.run_server(debug=True,host='0.0.0.0')

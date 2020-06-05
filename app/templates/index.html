@@ -3,16 +3,29 @@
   <head>
     <link rel="stylesheet" type="text/css" href="/static/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   </head>
   <body>
+    <div id="div_login" class="modal">
+      <label for="txt_login" >Please, identify yourself:</label>
+      <input type="text" value="" id="txt_login" width="60" maxlength="60" />
+      <select id="ddl_country">
+        <option value="english">English</option>
+        <option value="russian">русски</option>
+        <option value="spanish">Spanish</option>
+        <option value="portuguese">Portuguese</option>
+      </select>
+      <input type="button" value="" id="login" onclick="validate()"/>
+    </div>
     <h1>iris-python-suite</h1>
-    <h3>Banzairis Chatbot</h3>
     <h3>
       <a href="https://openexchange.intersystems.com/contest/current" target="_blank">If you like, please vote iris-python-suite at openexchange.</a>
     </h3>
     <div>
       <div id="chatbox">
-        <p class="botText"><span>Hi! I'm Banzairis Chatbot.</span></p>
+        <p class="botText"><span id="p_initial">Hi! I'm Banzairis Chatbot.</span></p>
       </div>
       <div id="userInput">
         <input id="textInput" type="text" name="msg" placeholder="Message">
@@ -21,14 +34,17 @@
       <script>
         function getBotResponse() {
           var rawText = $("#textInput").val();
+          var loginText = $("#txt_login").val();
+          var languageText = $("#ddl_country").val();
           var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
           $("#textInput").val("");
           $("#chatbox").append(userHtml);
           document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
-          $.get("/get", { msg: rawText }).done(function(data) {
+          $.get("/get", { msg: rawText, login: loginText, language:languageText }).done(function(data) {
             var botHtml = '<p class="botText"><span>' + data + '</span></p>';
             $("#chatbox").append(botHtml);
             document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+            $("#textInput").focus()
           });
         }
         $("#textInput").keypress(function(e) {
@@ -39,6 +55,27 @@
         $("#buttonInput").click(function() {
           getBotResponse();
         })
+
+        $(document).ready(function(){
+          $("#div_login").modal({escapeClose: false,clickClose: false,showClose: false});
+          $("#txt_login").focus();
+        });
+
+        function validate()
+        {
+            if($("#txt_login").val()==='')
+            {
+              alert("Please identify yourself and press enter");
+              $("#txt_login").focus();
+            }
+            else
+            {
+              $("#p_initial").html("".concat("Hi ",$("#txt_login").val(),"! I'm Banzairis Bot!"));
+              $(".modal").modal("toggle");
+              $(".close-modal").click();
+              $("#textInput").focus()
+            }
+        }
       </script>
     </div>
   </body>
