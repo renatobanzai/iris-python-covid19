@@ -81,7 +81,7 @@ def get_index_layout():
     ])
 
 def get_config_crud_layout():
-
+    default_countries = iriscovid19.get_default_countries()
     return html.Div(children=[
         html.H1(children='Example of CRUD - Modifying the Default Config in IRIS Global'),
         html.P(children='''Change the default countries to show on COVID-19 Chart'''),
@@ -95,7 +95,7 @@ def get_config_crud_layout():
         ])])
 
 def get_covid19_layout():
-
+    default_countries = iriscovid19.get_default_countries()
     return html.Div(children=[
         html.Div(children=[
             html.Label('Countries'),
