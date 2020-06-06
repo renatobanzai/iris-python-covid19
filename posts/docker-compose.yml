@@ -1,18 +1,16 @@
 version: '3.6'
-volumes:
-  irisdata:
 services:
   iris-covid19:
     build:
-      context: ./iris
-      dockerfile: Dockerfile
+      context: ../iris
+      dockerfile: ../iris/Dockerfile
     restart: always
     hostname: iris-covid19
     command: --password-file password.txt
     environment:
       - ISC_DATA_DIRECTORY=/durable/irisdatabase
     volumes:
-      - irisdata:/durable
+      - ./data:/durable
     ports:
       - 9091:51773
       - 9092:52773
@@ -20,8 +18,8 @@ services:
 
   iris-python-covid19:
     build:
-      context: ./app
-      dockerfile: Dockerfile
+      context: ../app
+      dockerfile: ../app/Dockerfile
     hostname: python-covid19
     restart: always
     depends_on:
@@ -37,14 +35,16 @@ services:
     command: __main__.py
   iris-python-chatbot:
     build:
-      context: ./app
-      dockerfile: Dockerfile
+      context: ../app
+      dockerfile: ../app/Dockerfile
     hostname: python-covid19
     restart: always
     depends_on:
       - iris-covid19
+      - iris-python-covid19
     links:
       - iris-covid19
+      - iris-python-covid19
     ports:
       - 8080:5000
     volumes:
