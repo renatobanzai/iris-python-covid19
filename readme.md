@@ -156,6 +156,10 @@ Here some articles link to understant better the application:
 - [creating-chatbot-iris-and-python](https://community.intersystems.com/post/creating-chatbot-iris-and-python)
 - [help-my-chatbots-learn-language](https://community.intersystems.com/post/help-my-chatbots-learn-language)
 
+
+## Videos about this application
+- YouTube: https://www.youtube.com/watch?v=uLqf_MyP9Qs
+
 ## If you don't want to run local
 I deployed all the application at Azure, take a look at [http://iris-python-suite.eastus.cloudapp.azure.com/](http://iris-python-suite.eastus.cloudapp.azure.com/)
  
