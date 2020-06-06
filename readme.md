@@ -124,10 +124,9 @@ After the 1st time running the next ones will perform better and take less then 
 
 ### If is everything ok
 After a while you can open your browser and go to the address:
- 
-```
-http://localhost:8050
-```
+
+- Main Menu: [http://localhost:8050](http://localhost:8050)
+- Chatbot: [http://localhost:8080](http://localhost:8080)
 
 ### Main Menu
 The project has a main menu that points you to all the examples. Feel free to navigate.  
