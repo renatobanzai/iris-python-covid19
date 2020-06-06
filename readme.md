@@ -151,11 +151,15 @@ pass: theansweris42
 
 ## How does it work?
 This is a python application using the IRIS service to persist and read data. I use globals to store raw data from JHU and plot it using Python community libraries. All code in ./app folder.
-Here a link to understant more the application: (https://community.intersystems.com/post/iris-python-suite-hitchhikers-guide-global-1)
+Here some articles link to understant better the application: 
+- [iris-python-suite-hitchhikers-guide-global-1](https://community.intersystems.com/post/iris-python-suite-hitchhikers-guide-global-1)
+- [using-python-represent-globals-network-chart](https://community.intersystems.com/post/using-python-represent-globals-network-chart)
+- [creating-chatbot-iris-and-python](https://community.intersystems.com/post/creating-chatbot-iris-and-python)
+- [help-my-chatbots-learn-language](https://community.intersystems.com/post/help-my-chatbots-learn-language)
 
 ## If you don't want to run local
-I deployed all the application at Azure, take a look at (http://iris-python-suite.eastus.cloudapp.azure.com/) 
-
+I deployed all the application at Azure, take a look at [http://iris-python-suite.eastus.cloudapp.azure.com/](http://iris-python-suite.eastus.cloudapp.azure.com/)
+ 
 ## Note of condolence
 For everyone who lost any loved one for COVID-19 I would like to extend my heartfelt condolence. May my condolences bring you peace during this painful time.
 
