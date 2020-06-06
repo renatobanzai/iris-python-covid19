@@ -309,7 +309,7 @@ navbar = dbc.NavbarSimple(id="list_menu_content",
         dbc.NavItem(dbc.NavLink("COVID-19 Chart", href="/covid19-chart")),
         dbc.NavItem(dbc.NavLink("Config CRUD", href="/config-CRUD")),
         dbc.NavItem(dbc.NavLink("Chatbot Training Data", href="/chatbot-training-data")),
-        dbc.NavItem(dbc.NavLink("Talk with Chatbot", href="http://iris-python-suite.eastus.cloudapp.azure.com:8080", target="_blank")),
+        dbc.NavItem(dbc.NavLink("Talk with Chatbot", href="http://localhost:8080", target="_blank")),
         dbc.NavItem(dbc.NavLink("Vote in iris-python-suite!",
                                 href="https://openexchange.intersystems.com/contest/current", target="_blank"))
     ],
