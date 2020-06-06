@@ -2,8 +2,8 @@ version: '3.6'
 services:
   iris-covid19:
     build:
-      context: ../iris
-      dockerfile: ../iris/Dockerfile
+      context: iris
+      dockerfile: iris/Dockerfile
     restart: always
     hostname: iris-covid19
     command: --password-file password.txt
@@ -18,8 +18,8 @@ services:
 
   iris-python-covid19:
     build:
-      context: ../app
-      dockerfile: ../app/Dockerfile
+      context: app
+      dockerfile: app/Dockerfile
     hostname: python-covid19
     restart: always
     depends_on:
@@ -35,8 +35,8 @@ services:
     command: __main__.py
   iris-python-chatbot:
     build:
-      context: ../app
-      dockerfile: ../app/Dockerfile
+      context: app
+      dockerfile: app/Dockerfile
     hostname: python-covid19
     restart: always
     depends_on:
